@@ -44,7 +44,7 @@ class PaymentRequestRepository {
     if (!result.rowCount) {
       throw "Error: payment not found";
     }
-    return result.rows.map((row) => new PaymentRequest({ ...row }));
+    return new PaymentRequest({ ...result.rows[0] });
   }
 }
 

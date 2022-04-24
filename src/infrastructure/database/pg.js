@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
-const pool = new Pool();
+require("dotenv").config();
+const pg = new Pool();
 
-module.exports = pool;
+module.exports = pg;

@@ -1,12 +1,11 @@
-POST /order
+POST /order/new
 
 - request
 
-```json
+```
 {
   buyerName: string,
   shippingAddress: string,
-  shipOn: datetime,
   paymentMethod: string,
   orderItems: [{
     name: string,
@@ -18,7 +17,7 @@ POST /order
 
 - response
 
-```json
+```
 {
   id: string
 }
@@ -28,32 +27,49 @@ GET /order/:id
 
 - response
 
-```json
+```
 {
   id: string,
   status: string,
   buyerName: string,
   shippingAddress: string,
-  shipOn: datetime,
   paymentMethod: string,
-  orderItems: [{
+  items: [{
     name: string
     price: int
     quantity: int
   }],
-  paymentRequest: [{
+  paymentRequest: {
     price: int,
     paymentMethod: string,
     status: string
-  }]
+  }
 }
 ```
 
-POST stimulate-payment/:payment-id
+POST /order/cancel
+
+- request
+
+```
+{
+  orderId: string
+}
+```
 
 - response
 
-```json
+```
+{
+  msg: string
+}
+```
+
+POST stimulate-payment/:order-id
+
+- response
+
+```
 {
   msg: string
 }

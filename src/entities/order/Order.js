@@ -2,9 +2,8 @@ class Order {
   constructor(payload) {
     this.id = payload.id;
     this.status = payload.status;
-    this.buyerName = payload.buyerName;
-    this.shippingAddress = payload.shippingAddress;
-    this.shipOn = payload.shipOn;
+    this.buyerName = payload.buyer_name;
+    this.shippingAddress = payload.shipping_address;
   }
 }
 

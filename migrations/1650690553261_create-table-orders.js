@@ -2,31 +2,27 @@
 
 exports.shorthands = undefined;
 
-exports.up = pgm => {
-  pgm.createTable('orders', {
+exports.up = (pgm) => {
+  pgm.createTable("orders", {
     id: {
-      type: 'VARCHAR(50)',
+      type: "VARCHAR(50)",
       primaryKey: true,
     },
     status: {
-      type: 'TEXT',
+      type: "TEXT",
       notNull: true,
     },
     buyer_name: {
-      type: 'TEXT',
+      type: "TEXT",
       notNull: true,
     },
     shipping_address: {
-      type: 'TEXT',
+      type: "TEXT",
       notNull: true,
-    },
-    ship_on: {
-      type: 'TEXT',
-      notNull: true
     },
   });
 };
 
-exports.down = pgm => {
-  pgm.dropTable('orders')
+exports.down = (pgm) => {
+  pgm.dropTable("orders");
 };

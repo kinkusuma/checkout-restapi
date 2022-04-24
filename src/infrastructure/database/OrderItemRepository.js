@@ -32,7 +32,7 @@ class OrderItemRepository {
       values: [orderId],
     };
     const result = await this._pool.query(query);
-    return result.rows.map((row) => OrderItem({ ...row }));
+    return result.rows.map((row) => new OrderItem({ ...row }));
   }
 }
 

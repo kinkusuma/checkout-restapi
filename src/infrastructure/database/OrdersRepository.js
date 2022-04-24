@@ -6,12 +6,12 @@ class OrdersRepository {
     this._pool = pool;
   }
 
-  async create({ buyerName, shippingAddress, shipOn }) {
+  async create({ buyerName, shippingAddress }) {
     const id = this._idGenerator();
     const status = "ON REQUEST";
     const query = {
-      text: "INSERT INTO orders VALUES ($1,$2,$3,$4,$5) RETURNING id",
-      values: [id, status, buyerName, shippingAddress, shipOn],
+      text: "INSERT INTO orders VALUES ($1,$2,$3,$4) RETURNING id",
+      values: [id, status, buyerName, shippingAddress],
     };
     const result = await this._pool.query(query);
     return result.rows[0].id;
@@ -19,7 +19,7 @@ class OrdersRepository {
 
   async get(orderId) {
     const query = {
-      text: "SELECT * FROM orders where orders.id = $1",
+      text: "SELECT * FROM orders WHERE id = $1",
       values: [orderId],
     };
     const result = await this._pool.query(query);
@@ -29,8 +29,26 @@ class OrdersRepository {
     return new Order({ ...result.rows[0] });
   }
 
+  async requestShipment(orderId) {
+    const status = "REQUEST SHIPMENT";
+    const query = {
+      text: "UPDATE orders SET status = $1 WHERE id = $2",
+      values: [status, orderId],
+    };
+    await this._pool.query(query);
+  }
+
   async cancel(orderId) {
     const status = "CANCELED";
+    const query = {
+      text: "UPDATE orders SET status = $1 WHERE id = $2",
+      values: [status, orderId],
+    };
+    await this._pool.query(query);
+  }
+
+  async complete(orderId) {
+    const status = "COMPLETE";
     const query = {
       text: "UPDATE orders SET status = $1 WHERE id = $2",
       values: [status, orderId],
